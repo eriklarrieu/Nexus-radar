@@ -1,8 +1,8 @@
-name: NEXUS - radar diario
+name: NEXUS - radar horario
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 12 * * *'
+    - cron: '17 * * * *'
   push:
     branches: [main]
     paths:
@@ -14,7 +14,7 @@ permissions:
 jobs:
   scan:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 9
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -22,11 +22,11 @@ jobs:
           python-version: '3.11'
       - name: Verificar pruebas
         run: python -m unittest -v test_nexus.py
-      - name: Investigar recompensas publicas
+      - name: Buscar recompensas desde USD 5
         env:
           GITHUB_TOKEN: ${{ github.token }}
-        run: python nexus_radar.py --min-usd 30 --limit 12
-      - name: Guardar informe
+        run: python nexus_radar.py --min-usd 5 --limit 30
+      - name: Guardar informe de candidatos (no adjudicaciones)
         if: always()
         uses: actions/upload-artifact@v4
         with:
