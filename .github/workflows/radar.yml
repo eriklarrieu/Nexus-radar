@@ -1,0 +1,36 @@
+name: NEXUS - radar diario
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * *'
+  push:
+    branches: [main]
+    paths:
+      - 'nexus_radar.py'
+      - 'test_nexus.py'
+      - '.github/workflows/radar.yml'
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Verificar pruebas
+        run: python -m unittest -v test_nexus.py
+      - name: Investigar recompensas publicas
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python nexus_radar.py --min-usd 30 --limit 12
+      - name: Guardar informe
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nexus-radar-results
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 7
