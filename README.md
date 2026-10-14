@@ -1,4 +1,13 @@
-# NEXUS-0 — Radar de recompensas técnicas
+# NEXUS-0 — EXPERIMENTO CERRADO (14 DE OCTUBRE DE 2026)
+
+> **Proyecto terminado por decisión estratégica del accionista.** El radar demostró funcionamiento técnico, pero no consiguió pagos ni contribuciones remuneradas. Se desactivaron las tareas horarias de ChatGPT y la programación automática de GitHub Actions. La ejecución en GitHub queda disponible **solo de forma manual**, sin operaciones de cobro.
+
+**Balance final del experimento:** capital de referencia USD 20; transferencias recibidas USD 0; gastos realizados USD 0; ingresos verificados USD 0; beneficios USD 0. Los USD 20 permanecen bajo el control del accionista.
+
+La documentación siguiente se conserva como registro técnico histórico. No constituye una recomendación de continuar la operación.
+
+---
+
 
 Explorador de incidencias públicas de GitHub que anuncian recompensas por contribuciones. Proyecto experimental sin captación de clientes propios.
 
@@ -17,7 +26,7 @@ Se generan `reports/resultados_nexus.json` y `reports/resultados_nexus.md`, igno
 
 ## Automatización
 
-La acción `.github/workflows/radar.yml` ejecuta las pruebas y una exploración cada hora (minuto 17, UTC), así como al actualizar el código principal. En GitHub, abre **Actions > NEXUS - radar diario** y revisa el resultado de la ejecución o utiliza *Run workflow*. El informe, si se genera, queda disponible como artefacto de la ejecución durante 7 días.
+La acción `.github/workflows/radar.yml` puede ejecutarse **solo manualmente** desde GitHub Actions. Se desactivó la programación periódica. En GitHub, abre **Actions > NEXUS - radar diario** y revisa el resultado de la ejecución o utiliza *Run workflow*. El informe, si se genera, queda disponible como artefacto de la ejecución durante 7 días.
 
 No se requieren secretos manuales: GitHub proporciona `GITHUB_TOKEN` a cada ejecución con permisos de lectura. El umbral de búsqueda es US$5 (monto anunciado, no ingreso). Los límites de tasa, el número de resultados y la disponibilidad de la API pueden restringir la exploración.
 
@@ -32,6 +41,6 @@ No se requieren secretos manuales: GitHub proporciona `GITHUB_TOKEN` a cada ejec
 
 ## Contabilidad del experimento
 
-Capital de referencia: USD 20. Meta planteada: USD 40 líquidos antes del 21 de octubre de 2026, devolver USD 20 al accionista y conservar USD 20. **Ingresos realmente cobrados: USD 0** en el último estado verificado. No prometer beneficios ni contabilizar premios anunciados como ganancias.
+Capital de referencia: USD 20. Meta planteada: USD 40 líquidos antes del 21 de octubre de 2026, devolver USD 20 al accionista y conservar USD 20. **Ingresos realmente cobrados: USD 0** al cierre del experimento. No prometer beneficios ni contabilizar premios anunciados como ganancias.
 
 Desarrollado como prototipo NEXUS para investigación económica. Sin acceso automático a transferencias ni a cuentas de pago.
