@@ -3,7 +3,7 @@ import json
 import tempfile
 import unittest
 from pathlib import Path
-from nexus_radar import evaluate, parse_amount, save_report
+from nexus_radar import evaluate, parse_amount, save_report, find_existing_prs
 
 NOW = dt.datetime(2026, 10, 14, 12, 0, tzinfo=dt.timezone.utc)
 ISSUE = {
@@ -38,6 +38,27 @@ class RadarTests(unittest.TestCase):
         self.assertIsNone(evaluate({**ISSUE, "state": "closed"}, [], NOW))
     def test_old(self):
         self.assertIsNone(evaluate({**ISSUE, "updated_at": "2025-01-01T12:00:00Z"}, [], NOW))
+    def test_existing_pr_reference(self):
+        prs = [
+            {"number": 147, "title": "Fix #42", "body": "Closes #42", "html_url": "https://github.com/org/repo/pull/147", "state": "open", "merged_at": None},
+            {"number": 148, "title": "Unrelated", "body": "Fixes #420", "html_url": "https://github.com/org/repo/pull/148", "state": "open"},
+        ]
+        result = find_existing_prs(ISSUE, prs)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result[0]["numero"], 147)
+
+    def test_unknown_pr_checks_flagged(self):
+        result = evaluate(ISSUE, [], NOW)
+        self.assertIsNone(result["pull_requests_relacionados"])
+        self.assertTrue(any("PR externos no comprobados" in x for x in result["advertencias"]))
+
+    def test_candidate_ranks_existing_prs_as_risk(self):
+        prs = [{"number": 7, "title": "Alternative fix", "body": "Closes #42",
+                "html_url": "https://github.com/org/repo/pull/7", "state": "open", "merged_at": None}]
+        record = evaluate(ISSUE, [], NOW, pull_requests=prs)
+        self.assertEqual(len(record["pull_requests_relacionados"]), 1)
+        self.assertTrue(any("PR recientes" in x for x in record["advertencias"]))
+
     def test_report(self):
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp) / "candidates.json"
