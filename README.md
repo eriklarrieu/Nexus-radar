@@ -17,9 +17,9 @@ Se generan `reports/resultados_nexus.json` y `reports/resultados_nexus.md`, igno
 
 ## Automatización
 
-La acción `.github/workflows/radar.yml` ejecuta las pruebas y una exploración cada día a las 12:00 UTC, así como al actualizar el código principal. En GitHub, abre **Actions > NEXUS - radar diario** y revisa el resultado de la ejecución o utiliza *Run workflow*. El informe, si se genera, queda disponible como artefacto de la ejecución durante 7 días.
+La acción `.github/workflows/radar.yml` ejecuta las pruebas y una exploración cada hora (minuto 17, UTC), así como al actualizar el código principal. En GitHub, abre **Actions > NEXUS - radar diario** y revisa el resultado de la ejecución o utiliza *Run workflow*. El informe, si se genera, queda disponible como artefacto de la ejecución durante 7 días.
 
-No se requieren secretos manuales: GitHub proporciona `GITHUB_TOKEN` a cada ejecución con permisos de lectura. Los límites de tasa, el número de resultados y la disponibilidad de la API pueden restringir la exploración.
+No se requieren secretos manuales: GitHub proporciona `GITHUB_TOKEN` a cada ejecución con permisos de lectura. El umbral de búsqueda es US$5 (monto anunciado, no ingreso). Los límites de tasa, el número de resultados y la disponibilidad de la API pueden restringir la exploración.
 
 ## Criterios antes de perseguir una recompensa
 
